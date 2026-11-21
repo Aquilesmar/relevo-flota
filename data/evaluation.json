@@ -1,0 +1,41 @@
+{
+  "train": 48000,
+  "validation": 12000,
+  "test": 16000,
+  "positives": 375,
+  "cutoff": 0.028404513912127553,
+  "model": {
+    "tp": 355,
+    "fp": 308,
+    "fn": 20,
+    "tn": 15317,
+    "cost": 13080,
+    "recall": 0.9467,
+    "precision": 0.5354
+  },
+  "inspect_none": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 375,
+    "tn": 15625,
+    "cost": 187500,
+    "recall": 0.0,
+    "precision": 0.0
+  },
+  "inspect_all": {
+    "tp": 375,
+    "fp": 15625,
+    "fn": 0,
+    "tn": 0,
+    "cost": 156250,
+    "recall": 1.0,
+    "precision": 0.0234
+  },
+  "average_precision": 0.9115,
+  "prevalence": 0.0234,
+  "top_5pct": {
+    "slots": 800,
+    "captured": 361,
+    "recall": 0.9627
+  }
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Relevo · Mesa de taller</title><link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}"></head>
+<body><header><div class="wrap bar"><strong class="brand"><i aria-hidden="true">≋</i> Relevo</strong><span>Mesa de taller</span><span class="badge">Turno simulado</span></div></header>
+<main class="wrap">
+<section class="intro"><div><h1>Prioridad de revisión</h1><p>Asigná los cupos de taller y prepará la entrega al siguiente turno.</p></div>
+<button id="report" class="primary">Generar parte de turno</button></section>
+<section class="stats" aria-label="Indicadores del turno">
+<div><span>Casos evaluados</span><b>{{ shift.total }}</b></div>
+<div><span>Para revisión</span><b>{{ shift.queue|length }}</b></div>
+<div><span>Cupos disponibles</span><b class="accent">{{ shift.free }} <small>/ {{ shift.capacity }}</small></b></div>
+</section>
+<div class="columns"><section class="card"><div class="head"><h2>Cola del taller</h2><span>Mayor puntaje primero</span></div>
+<div class="scroll"><table><thead><tr><th>Caso</th><th>Puntaje ML</th><th>Faltantes¹</th><th>Revisión</th></tr></thead><tbody>
+{% for row in shift.queue %}<tr><td><b>{{ row.id }}</b></td><td><div class="meter"><span>{{ '%.3f'|format(row.score) }}</span><i><em style="width:{{ (100*row.score)|round(1) }}%"></em></i></div></td><td>{{ row.missing }}</td><td>
+{% if row.id in shift.assigned %}<span class="assigned">Asignada</span>{% else %}<button class="assign" data-id="{{row.id}}" {% if not shift.free %}disabled{% endif %}>Asignar cupo</button>{% endif %}
+</td></tr>{% endfor %}</tbody></table></div><p class="note">¹ Cantidad de canales sin lectura entre los 170 del caso. El puntaje ordena casos según su similitud con fallas APS.</p>
+</section><aside class="card"><div class="head"><h2>Asistente de turno</h2></div>
+<p class="helper">Consultá las guías del taller antes de confirmar una revisión.</p>
+{% for guide in guides %}<details><summary><b>{{ guide.id }}</b> {{ guide.title }}</summary><p>{{ guide.text }}</p></details>{% endfor %}
+{% if claude %}<form id="ask"><label for="question">Preguntale a Claude</label><textarea id="question" maxlength="750" required placeholder="¿Qué casos quedan pendientes y qué guía aplica?"></textarea><button>Consultar</button></form>{% else %}<p class="note">Modo local · Guías y parte disponibles. Las preguntas abiertas se habilitan al conectar Claude.</p>{% endif %}
+</aside></div>
+<section id="result" class="card output" hidden aria-live="polite"><h2 id="result-title">Parte de turno</h2><pre id="answer"></pre><details id="trace" hidden><summary>Ver consultas y evidencia</summary><pre id="evidence"></pre></details><a id="download" href="/api/parte" download="parte-de-turno.txt">Descargar parte</a></section>
+<p id="status" role="status"></p>
+<footer>Datos de camiones Scania · UCI ML Repository <span>Identificadores y cupos simulados · Modelo evaluado en {{ '{:,}'.format(metrics.test).replace(',', '.') }} casos</span></footer>
+</main><script src="{{ url_for('static', filename='app.js') }}"></script></body></html>

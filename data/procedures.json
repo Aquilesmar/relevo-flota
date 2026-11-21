@@ -1,0 +1,17 @@
+[
+  {
+    "id": "TAL-01",
+    "title": "Orden de atención",
+    "text": "Ordenar los casos observados por puntaje descendente. Presentar para revisión los que superen el umbral del modelo. El supervisor decide cómo asignar los tres cupos del turno simulado."
+  },
+  {
+    "id": "DAT-02",
+    "title": "Lecturas faltantes",
+    "text": "Consultar el número de campos faltantes en la ficha. Los canales están anonimizados. Registrar la incertidumbre antes de interpretar el puntaje o solicitar más datos."
+  },
+  {
+    "id": "REL-03",
+    "title": "Entrega de turno",
+    "text": "Identificar los casos con revisión asignada y los pendientes. Documentar la guía aplicada y entregar el parte al siguiente supervisor. La orden solo registra una solicitud de revisión."
+  }
+]

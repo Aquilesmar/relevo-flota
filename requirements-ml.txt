@@ -1,0 +1,7 @@
+-r requirements.txt
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.1
+threadpoolctl==3.5.0
+joblib==1.4.2
+
